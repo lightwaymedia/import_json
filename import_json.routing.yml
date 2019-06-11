@@ -1,0 +1,7 @@
+import_json.import_json:
+  path: '/admin/config/content/import_json'
+  defaults:
+    _form: '\Drupal\import_json\Form\ImportJSONForm'
+    _title: 'Import JSON'
+  requirements:
+    _role: 'administrator'
