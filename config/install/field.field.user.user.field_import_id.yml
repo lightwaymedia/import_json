@@ -1,0 +1,20 @@
+uuid: 66a3bb30-a341-4113-9d04-1d8289d7c1e6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_import_id
+  module:
+    - user
+id: user.user.field_import_id
+field_name: field_import_id
+entity_type: user
+bundle: user
+label: 'Import ID'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
