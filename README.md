@@ -1,4 +1,4 @@
-# import_json
+# import_json (Drupal 8 module)
 
 A module that facilitates for the importing of posts and users from a public JSON resource. The sample JSON resources used to construct this demo functionality are:
 
