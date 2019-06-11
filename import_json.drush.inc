@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file Contains the code to generate the custom drush commands for TFA.
+ * @file Contains the code to generate the custom drush commands for the Import JSON module.
  */
 
 /**
@@ -15,19 +15,18 @@ function import_json_drush_command() {
     'name' => 'Start JSON Import',
   ],
   'drupal dependencies' => ['import_json'],
-  'aliases' => ['tfa:json_import'],
+  'aliases' => ['import:json_import'],
   ];
   return $items;
 }
 /**
- * Call back function drush_custom_drush_command_say_hello()
  * The call back function name in the  following format
  *   drush_{module_name}_{item_id_for_command}()
  */
 function drush_import_json_start_json_import($name = '') {
   $config = \Drupal::config('import_json.config');
   if ($config->get('bool__permit_drush_import_trigger')) {
-    drush_log('TFA JSON import triggered', 'ok');
+    drush_log('Import JSON import triggered', 'ok');
     if (extension_loaded('curl')) {
       // load service that triggers import
       $service = \Drupal::service('import_json.import');
