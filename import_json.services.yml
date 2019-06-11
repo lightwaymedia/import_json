@@ -1,0 +1,4 @@
+services:
+  import_json.import:
+    class: Drupal\import_json\Services\ImportJSONService
+    arguments: []
