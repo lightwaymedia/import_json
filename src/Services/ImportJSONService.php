@@ -35,26 +35,28 @@ class ImportJSONService {
     $result = curl_exec($ch);
     curl_close($ch);
     $json = json_decode($result, true);
-
-    if ($batch_bool) {
-      // Define batch operation
-      foreach (array_chunk($json, 10) as $result) {
-        $operations[] = array('\Drupal\import_json\CreateEntities::CreateEntities', array($entity_type, $result));
+    
+    if (!empty($json)) {
+      if ($batch_bool) {
+        // Define batch operation
+        foreach (array_chunk($json, 10) as $result) {
+          $operations[] = array('\Drupal\import_json\CreateEntities::CreateEntities', array($entity_type, $result));
+        }
+  
+        // Build batch job
+        $batch = array(
+          'title' => t('Importing JSON now...'),
+          'operations' => $operations,
+          'init_message' => t('Starting import from JSON'),
+          'error_message' => t('An error occurred during the JSON import'),
+          'finished' => '\Drupal\import_json\CreateEntities::CreateEntitiesFinishedCallback',
+        );
+  
+        batch_set($batch);
+      } else {
+        // Do not use batch (drush command)
+        $create_entities = \Drupal\import_json\CreateEntities::CreateEntities($entity_type, $json, true);
       }
-
-      // Build batch job
-      $batch = array(
-        'title' => t('Importing JSON now...'),
-        'operations' => $operations,
-        'init_message' => t('Starting import from JSON'),
-        'error_message' => t('An error occurred during the JSON import'),
-        'finished' => '\Drupal\import_json\CreateEntities::CreateEntitiesFinishedCallback',
-      );
-
-      batch_set($batch);
-    } else {
-      // Do not use batch (drush command)
-      $create_entities = \Drupal\import_json\CreateEntities::CreateEntities($entity_type, $json, true);
     }
   }
 }
